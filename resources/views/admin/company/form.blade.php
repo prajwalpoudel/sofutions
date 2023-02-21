@@ -3,7 +3,10 @@
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('name', 'Name :') !!}
-                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                {!! Form::text('name', null, ['class' => $errors->first('name') ? 'is-invalid form-control': 'form-control']) !!}
+                @error('name')
+                    <span class="error error-feedback">{{ $message }}</span>
+                @enderror
             </div>
         </div>
         <div class="col-md-6">
@@ -19,10 +22,13 @@
                 {!! Form::label('logo', 'Logo :') !!}
                 <div class="input-group">
                     <div class="custom-file">
-                        {!! Form::file('logo', ['class' => 'custom-file-input']) !!}
+                        {!! Form::file('logo', ['class' => $errors->first('logo') ? 'is-invalid custom-file-input' : 'custom-file-input']) !!}
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
                 </div>
+                @error('logo')
+                <span class="error error-feedback">{{ $message }}</span>
+                @enderror
             </div>
         </div>
 

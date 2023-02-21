@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\EmployeeFormRequest;
 use App\Http\Services\CompanyService;
 use App\Http\Services\EmployeeService;
 use App\Models\Employee;
@@ -59,7 +60,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created Employee in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(EmployeeFormRequest $request): RedirectResponse
     {
         $this->employeeService->create($request->all());
 
@@ -80,7 +81,7 @@ class EmployeeController extends Controller
     /**
      * Update the employee resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(EmployeeFormRequest $request, string $id): RedirectResponse
     {
         $this->employeeService->update($id, $request->all());
 

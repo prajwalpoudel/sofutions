@@ -3,13 +3,19 @@
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('first_name', 'First name :') !!}
-                {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                {!! Form::text('first_name', null, ['class' => $errors->first('first_name') ? 'is-invalid form-control' : 'form-control']) !!}
+                @error('first_name')
+                <span class="error error-feedback">{{ $message }}</span>
+                @enderror
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('last_name', 'Last name :') !!}
-                {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                {!! Form::text('last_name', null, ['class' => $errors->first('last_name') ? 'is-invalid form-control' : 'form-control']) !!}
+                @error('first_name')
+                <span class="error error-feedback">{{ $message }}</span>
+                @enderror
             </div>
         </div>
     </div>
