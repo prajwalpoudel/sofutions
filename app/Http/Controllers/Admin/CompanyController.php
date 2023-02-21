@@ -8,6 +8,7 @@ use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -34,6 +35,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::paginate(10);
+
         return view($this->view.'index', compact('companies'));
     }
 
@@ -50,7 +52,11 @@ class CompanyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->companyService->create($request->all());
+        $storeData = $request->all();
+        if ($logo = $request->file('logo')) {
+            $storeData['logo'] = Storage::putFile('logo', $logo);
+        }
+        $this->companyService->create($storeData);
 
         return redirect()->route('admin.company.index');
     }
@@ -70,7 +76,17 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $this->companyService->update($id, $request->all());
+        $company = $this->companyService->findOrFail($id);
+        $updateData    = $request->all();
+        if ($logo = $request->file('logo')) {
+            $updateData['logo'] = Storage::putFile('logo', $logo);
+            if( $company->logo) {
+                if (Storage::exists($logo = $company->logo)) {
+                    Storage::delete($logo);
+                }
+            }
+        }
+        $company->update($updateData);
 
         return redirect()->route('admin.company.index');
     }
@@ -80,7 +96,13 @@ class CompanyController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $this->companyService->destroy($id);
+        $company = $this->companyService->findOrFail($id);;
+        if ($company->logo) {
+            if (Storage::exists($logo = $company->logo)) {
+                Storage::delete($logo);
+            }
+        }
+        $company->delete();
 
         return redirect()->back();
     }

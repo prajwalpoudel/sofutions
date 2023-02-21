@@ -16,6 +16,18 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
+                {!! Form::label('logo', 'Logo :') !!}
+                <div class="input-group">
+                    <div class="custom-file">
+                        {!! Form::file('logo', ['class' => 'custom-file-input']) !!}
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
                 {!! Form::label('website', 'Website :') !!}
                 {!! Form::text('website', null, ['class' => 'form-control']) !!}
             </div>
