@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CompanyFormRequest;
 use App\Http\Services\CompanyService;
 use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +51,7 @@ class CompanyController extends Controller
     /**
      * Store a newly created Company in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CompanyFormRequest $request): RedirectResponse
     {
         $storeData = $request->all();
         if ($logo = $request->file('logo')) {
@@ -74,7 +75,7 @@ class CompanyController extends Controller
     /**
      * Update the Company resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(CompanyFormRequest $request, string $id): RedirectResponse
     {
         $company = $this->companyService->findOrFail($id);
         $updateData    = $request->all();
