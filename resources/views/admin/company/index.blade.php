@@ -29,7 +29,7 @@
                             <td>{{ $key+1 }}</td>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->email }}</td>
-                            <td>{{ $company->logo }}</td>
+                            <td><img src="{{ \Illuminate\Support\Facades\Storage::url($company->logo) }}" alt="{{ $company->name }}" height="40px;" width="40px;"</td>
                             <td>{{ $company->website }}</td>
                             <td>@include('admin.general.action', ['params' => ['route' => 'admin.company', 'id' => $company->id]])</td>
                         </tr>
